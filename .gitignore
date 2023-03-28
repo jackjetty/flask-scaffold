@@ -1,0 +1,9 @@
+.idea/
+*.pyc
+*.pyo
+*.log
+*$py.class
+__pycache__/
+/logs
+/images
+.env
