@@ -7,6 +7,7 @@ class Config:
     HOST = 'localhost'
     PORT = 10036
     LOG_FILE = ''
+    SECRET_KEY = '\xfd{H\xe5<\x95\xf9\xe3\x96.5\xd1\x01O<!\xd5\xa2\xa0\x9fR"\xa1\xa8'
     DB_HOST =os.getenv("DB_HOST",'127.0.0.1')   
     DB_PORT =os.getenv("DB_PORT",3306)   
     DB_USERNAME =os.getenv("DB_USERNAME", 'root')   
@@ -24,6 +25,28 @@ class Config:
     SQLALCHEMY_ECHO=True
     SQLALCHEMY_DATABASE_URI = 'mysql+mysqlconnector://{}:{}@{}:{}/{}?charset=utf8'.format(
         DB_USERNAME, urlquote(DB_PASSWORD), urlquote(DB_HOST), DB_PORT, DB_SCHEMA_NAME)
+
+    SCHEDULER_EXECUTORS = {
+        'default': {'type': 'threadpool', 'max_workers': 20}
+    }
+    SCHEDULER_JOB_DEFAULTS = {
+        'coalesce': False,
+        'max_instances': 3
+    }
+    SCHEDULER_API_ENABLED = True
+    SCHEDULER_TIMEZONE = 'Asia/Shanghai'  
+    JOBS=[
+        {
+            'id': '1',
+            'func': 'job:testTask',
+            'args': None,
+            'replace_existing':True,
+            'trigger': 'cron',
+            'max_instances': 10, 
+            'hour': '10,12,15,20',
+            'minute': '8'
+        }
+    ]  
 
 
 class DevConfig(Config):

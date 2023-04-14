@@ -10,6 +10,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from flask_jwt_extended import (JWTManager)
 from flask_bcrypt import Bcrypt
+from flask_apscheduler import APScheduler 
 from config.setting import configs 
 from dotenv import load_dotenv, find_dotenv
 
@@ -20,6 +21,8 @@ db = SQLAlchemy()
 bcrypt = Bcrypt()
 # cross origin request
 cors = CORS()
+# apscheduler
+scheduler=APScheduler()
 # json web token support
 jwt = JWTManager()
 # logger config
@@ -64,6 +67,8 @@ def create_app(profile=None):
     db.init_app(app)
     bcrypt.init_app(app)
     jwt.init_app(app)
+    scheduler.init_app(app)
+    scheduler.start()
     #app.json_encoder = CustomJSONEncoder
     cors.init_app(app, resources={r"/api/v1/*": {"origins": "*"}})
     from api import api_v1

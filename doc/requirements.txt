@@ -10,3 +10,4 @@ Flask-JWT-Extended==4.3.1
 python-dotenv==0.20.0
 mysql-connector-python==8.0.28
 werkzeug==2.2.3
+flask-apscheduler==1.12.4
