@@ -26,3 +26,16 @@ http://192.168.100.113:10036/api/v1/
 ### 注意
 - 使用了python-dotenv 设置环境变量
 - pip install  -i http://mirrors.aliyun.com/pypi/simple  --trusted-host mirrors.aliyun.com  -r doc/requirements.txt
+
+
+## 安装flask_cache 注意点
+- 版本号：flask_cache==0.13.1
+- No module named ‘werkzeug.contrib‘
+  版本兼容性， cd Lib\site-packages\flask_cache ，vim backends.py 
+  修改 from cachelib  import (BaseCache, NullCache, SimpleCache, MemcachedCache,  FileSystemCache)
+  修改 from werkzeug.contrib.cache import RedisCache 变为 from cachelib import RedisCache
+  最后 还是调整为 flask_caching
+
+
+
+

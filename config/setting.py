@@ -46,7 +46,13 @@ class Config:
             'hour': '10,12,15,20',
             'minute': '8'
         }
-    ]  
+    ]
+    CACHE_TYPE = 'redis'
+    CACHE_REDIS_HOST=os.getenv("REDIS_HOST", '127.0.0.1') 
+    CACHE_REDIS_PORT=os.getenv("REDIS_PORT", 6379) 
+    CACHE_REDIS_PASSWORD=os.getenv("REDIS_PASSWORD", '123456') 
+    CACHE_REDIS_DB=os.getenv("REDIST_DB", 0) 
+    CACHE_KEY_PREFIX=""
 
 
 class DevConfig(Config):

@@ -1,7 +1,7 @@
 from http import HTTPStatus
 from flask import  jsonify,current_app,abort,request,g
 from flask_restx import Api, Resource, fields,Namespace
-from starter import app,  logger ,db 
+from starter import app,  logger ,db ,cache
 from flask_jwt_extended import (
     jwt_required, create_access_token, create_refresh_token, get_jwt,
     get_jwt_identity
@@ -94,6 +94,16 @@ class AuthLogin(Resource):
         loginVo.accessToken=access_token
         loginVo.account=userModel.account
         loginVo.roles=[]
+        cache.set('user:{}'.format(userModel.id),{"topic": 
+        {
+            "key0":"value",
+            "key1":
+            [
+                {"key3":1}
+            ]
+        }
+    },timeout=1000)
+        logger.info("user info: %s",cache.get('user:{}'.format(userModel.id)))
         result=Result.success(loginVo)
         #g.transaction=1
         return JsonUtil.class2dic_no_none(result)

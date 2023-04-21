@@ -11,6 +11,12 @@ from flask_cors import CORS
 from flask_jwt_extended import (JWTManager)
 from flask_bcrypt import Bcrypt
 from flask_apscheduler import APScheduler 
+# 处理werkzeug兼容性的问题
+#from werkzeug.utils import import_string
+#import werkzeug
+#werkzeug.import_string = import_string
+
+from flask_caching import Cache
 from config.setting import configs 
 from dotenv import load_dotenv, find_dotenv
 
@@ -23,6 +29,8 @@ bcrypt = Bcrypt()
 cors = CORS()
 # apscheduler
 scheduler=APScheduler()
+# cache 配置
+cache= Cache(with_jinja2_ext=False)
 # json web token support
 jwt = JWTManager()
 # logger config
@@ -69,6 +77,7 @@ def create_app(profile=None):
     jwt.init_app(app)
     scheduler.init_app(app)
     scheduler.start()
+    cache.init_app(app)
     #app.json_encoder = CustomJSONEncoder
     cors.init_app(app, resources={r"/api/v1/*": {"origins": "*"}})
     from api import api_v1
